@@ -1,18 +1,22 @@
 import { Login } from './pages/Login'
 import { Home } from './pages/Home'
-import { UserProvider } from './lib/context/user'
-import { Navbar } from './components/Navbar'
+// import { UserProvider } from './lib/context/user'
+// import { Navbar } from './components/Navbar'
+import { Register } from './pages/Register'
+import PrivateRoutes from './utils/PrivateRoutes'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
-  const isLoginPage = window.location.pathname === '/login'
-
   return (
-    <div>
-      <UserProvider>
-        <Navbar />
-        <main>{isLoginPage ? <Login /> : <Home />}</main>
-      </UserProvider>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route element={<PrivateRoutes />}>
+          <Route path="/" element={<Home />} />
+        </Route>
+      </Routes>
+    </Router>
   )
 }
 
