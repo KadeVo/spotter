@@ -7,21 +7,21 @@ const IdeasContext = createContext()
 export const SPOTTER_DATABASE_ID = import.meta.env.VITE_DATABASEID
 export const SPOTTER_COLLECTION_ID = import.meta.env.VITE_COLLECTIONID
 
-export function useIdeas() {
+export function useJobs() {
   return useContext(IdeasContext)
 }
 
 export function IdeasProvider(props) {
-  const [ideas, setIdeas] = useState([])
+  const [jobs, setJobs] = useState([])
 
-  async function add(idea) {
+  async function add(job) {
     const response = await databases.createDocument(
       SPOTTER_DATABASE_ID,
       SPOTTER_COLLECTION_ID,
       ID.unique(),
-      idea
+      job
     )
-    setIdeas((ideas) => [response.$id, ...ideas].slice(0, 10))
+    setJobs((jobs) => [response.$id, ...jobs].slice(0, 10))
   }
 
   async function remove(id) {
@@ -30,7 +30,7 @@ export function IdeasProvider(props) {
       SPOTTER_COLLECTION_ID,
       id
     )
-    setIdeas((ideas) => ideas.filter((idea) => idea.$id !== id))
+    setJobs((jobs) => jobs.filter((jobs) => jobs.$id !== id))
     await init()
   }
 
@@ -40,7 +40,7 @@ export function IdeasProvider(props) {
       SPOTTER_COLLECTION_ID,
       [Query.orderDesc('$createdAt'), Query.limit(10)]
     )
-    setIdeas(response.documents)
+    setJobs(response.documents)
   }
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export function IdeasProvider(props) {
   }, [])
 
   return (
-    <IdeasContext.Provider value={{ current: ideas, add, remove }}>
+    <IdeasContext.Provider value={{ current: jobs, add, remove }}>
       {props.children}
     </IdeasContext.Provider>
   )
