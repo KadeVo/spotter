@@ -5,7 +5,7 @@ export function Navbar() {
 
   return (
     <nav>
-      <a href="/">Idea tracker</a>
+      <a href="/">Spotter</a>
       <div>
         {user.current ? (
           <>
