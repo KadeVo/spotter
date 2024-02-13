@@ -1,10 +1,30 @@
 import { Link } from 'react-router-dom'
+import { useAuth } from '../utils/AuthContext'
+import { useRef } from 'react'
 
 const Register = () => {
+  const registerForm = useRef(null)
+  const { registerUser } = useAuth()
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    const name = registerForm.current.name.value
+    const email = registerForm.current.email.value
+    const password1 = registerForm.current.password1.value
+    const password2 = registerForm.current.password2.value
+    if (password1 !== password2) {
+      alert('Passwords are not identical')
+      return
+    }
+
+    const registerInfo = { name, email, password1, password2 }
+
+    registerUser(registerInfo)
+  }
   return (
     <div className="container">
       <div className="login-register-container">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="form-field-wrapper">
             <label>Name:</label>
             <input
