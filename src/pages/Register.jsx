@@ -1,17 +1,17 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../utils/AuthContext'
-import { useRef } from 'react'
 
 const Register = () => {
-  const registerForm = useRef(null)
   const { registerUser } = useAuth()
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const name = registerForm.current.name.value
-    const email = registerForm.current.email.value
-    const password1 = registerForm.current.password1.value
-    const password2 = registerForm.current.password2.value
+
+    const name = event.target.elements['name'].value
+    const email = event.target.elements['email'].value
+    const password1 = event.target.elements['password1'].value
+    const password2 = event.target.elements['password2'].value
+
     if (password1 !== password2) {
       alert('Passwords are not identical')
       return
